@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-class Open_File():
+class Open_File:
     def __init__(self, filename, mode):
         self.filename = filename
         self.mode = mode
@@ -17,6 +17,7 @@ class Open_File():
 
 
 from contextlib import contextmanager
+
 
 @contextmanager
 def open_file(file, mode):
