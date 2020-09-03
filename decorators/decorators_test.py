@@ -3,6 +3,7 @@
 
 def my_logger(orig_func):
     import logging
+
     logging.basicConfig(level=logging.INFO)
 
     def wrapper(*args, **kwargs):
