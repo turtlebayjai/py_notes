@@ -9,11 +9,11 @@ class Employee:
 
     @property
     def fullname(self):
-        return "{} {}".format(self.first, self.last)
+        return f"{self.first} {self.last}"
 
     @property
     def property_email(self):
-        return "{}.{}@email.com".format(self.first, self.last)
+        return f"{self.first}.{self.last}@email.com"
 
     @fullname.setter
     def fullname(self, name):

@@ -1,26 +1,25 @@
 #!/usr/bin/env python3
 
+import logging
+import time
+
 
 def my_logger(orig_func):
-    import logging
-
     logging.basicConfig(level=logging.INFO)
 
     def wrapper(*args, **kwargs):
-        logging.info("Ran with args: {}, and kwargs: {}".format(args, kwargs))
+        logging.info(f"Ran with args: {args}, and kwargs: {kwargs}")
         return orig_func(*args, **kwargs)
 
     return wrapper
 
 
 def my_timer(orig_func):
-    import time
-
     def wrapper(*args, **kwargs):
         t1 = time.time()
         result = orig_func(*args, **kwargs)
         t2 = time.time() - t1
-        print("{} ran in: {} sec".format(orig_func.__name__, t2))
+        print(f"{orig_func.__name__} ran in: {t2} sec")
         return result
 
     return wrapper
@@ -29,7 +28,7 @@ def my_timer(orig_func):
 @my_logger
 @my_timer
 def display_info(name, age):
-    print("display_info ran with arguments ({}, {})".format(name, age))
+    print(f"display_info ran with arguments ({name}, {age})")
 
 
 def main():
