@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from contextlib import contextmanager
+
 
 class Open_File:
     def __init__(self, filename, mode):
@@ -14,9 +16,6 @@ class Open_File:
     def __exit__(self, exc_type, exc_val, traceback):
         print("Open_File.__exit__(): closing file...")
         self.file.close()
-
-
-from contextlib import contextmanager
 
 
 @contextmanager
