@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import logging
 
 
 def cli():
@@ -8,14 +9,22 @@ def cli():
     parser.add_argument("input", help="file to be copied")
     parser.add_argument("output", help="file to be written")
     parser.add_argument("chunk", help="chunk size", type=int)
-    return parser.parse_args()
+    parser.add_argument(
+        "-q", "--quiet", help="only print warnings and errors", action="store_true"
+    )
+    args = parser.parse_args()
+
+    format = "%(levelname)-5s | %(message)s"
+    level = logging.INFO if not args.quiet else None
+    logging.basicConfig(format=format, level=level)
+    return args
 
 
 def print_msg(func):
     def wrapper(*args, **kwargs):
-        print(f"{func.__name__}{args}...")
+        logging.info(f"{func.__name__}{args}...")
         func(*args, **kwargs)
-        print(f"'{args[0]}' copied to '{args[1]}'")
+        logging.info(f"'{args[0]}' copied to '{args[1]}'")
 
     return wrapper
 
@@ -51,9 +60,9 @@ def main():
         copy_text_file(args.input, args.output)
         copy_text_chunks(args.input, args.output, args.chunk)
     except UnicodeDecodeError as e:
-        print(f"ERROR | {type(e).__name__}: {e}")
-        print(f"ERROR | {args.input}: file type unsupported")
-        print(f"ERROR | skipping copy_text_file() and copy_text_chunks()")
+        logging.error(f"{type(e).__name__}: {e}")
+        logging.error(f"{args.input} file type unsupported")
+        logging.error("skipping copy_text_file() and copy_text_chunks()")
     copy_bytes(args.input, args.output)
 
 
