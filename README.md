@@ -1,2 +1,2 @@
 # python_tests
-basic functionality of python features & packages
+basic functionality of features & packages
