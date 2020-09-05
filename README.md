@@ -1,2 +1,2 @@
 # python_tests
-basic functionality of features & packages
+experimenting with basic functionality & packages
