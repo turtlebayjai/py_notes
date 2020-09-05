@@ -10,12 +10,12 @@ def cli():
     parser.add_argument("output", help="file to be written")
     parser.add_argument("chunk", help="chunk size", type=int)
     parser.add_argument(
-        "-q", "--quiet", help="only print warnings and errors", action="store_true"
+        "-q", "--quiet", help="only show warnings and errors", action="store_true"
     )
     args = parser.parse_args()
 
     format = "%(levelname)-5s | %(message)s"
-    level = logging.INFO if not args.quiet else None
+    level = logging.WARNING if args.quiet else logging.INFO
     logging.basicConfig(format=format, level=level)
     return args
 
