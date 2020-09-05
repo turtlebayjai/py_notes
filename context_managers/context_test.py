@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 
+import argparse
 from contextlib import contextmanager
+
+
+def cli():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input", help="file to write")
+    return parser.parse_args()
 
 
 class Open_File:
@@ -30,17 +37,18 @@ def open_file(file, mode):
 
 
 def main():
+    args = cli()
     print("\nClass implementation of context manager")
-    with Open_File("test.txt", "w") as f:
-        print("Writing to test.txt...")
+    with Open_File(args.input, "w") as f:
+        print(f"Writing to {args.input}...")
         f.write("Testing")
-    print("test.txt closed?", f.closed)
+    print(f"{args.input} closed?", f.closed)
 
     print("\nFunction implementation of context manager")
-    with open_file("test.txt", "w") as f:
-        print("Writing to test.txt...")
+    with open_file(args.input, "w") as f:
+        print(f"Writing to {args.input}...")
         f.write("Testing")
-    print("test.txt closed?", f.closed)
+    print(f"{args.input} closed?", f.closed)
 
 
 if __name__ == "__main__":
