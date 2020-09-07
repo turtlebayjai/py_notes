@@ -43,15 +43,15 @@ def download_image(img_url):
 
 @timer
 def no_threading(urls):
-    for img in urls:
-        download_image(img)
+    for url in urls:
+        download_image(url)
 
 
 @timer
 def with_threading(urls):
     threads = []
-    for img in urls:
-        t = threading.Thread(target=download_image, args=[img])
+    for url in urls:
+        t = threading.Thread(target=download_image, args=[url])
         t.start()
         threads.append(t)
     for thread in threads:
