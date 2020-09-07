@@ -69,13 +69,12 @@ def with_threading(seconds, n_threads):
             target=lambda l, s: l.append(sleep_for(s)), args=[results, seconds]
         )
         t.start()
-        # join() blocks main() execution until the 'joined' thread terminates.
-        # Calling join() now will stop further loop execution.
+        # join() blocks main() execution until the 'joined' thread terminates
+        # Calling join() now will stop further loop execution
         thread_list.append(t)
         seconds += 1
-    # Call join() after starting all threads.
-    # Waits for threads to finish executing. Threads will finish as completed.
-    # Notice: did not join() last thread, so finishes while main() continues.
+    # Call join() after starting all threads (will wait for thread to finish)
+    # Notice: did not join() last thread, so finishes after main() continues
     for thread in thread_list[:-1]:
         thread.join()
     # Last thread will not appear in results (still executing).
@@ -85,7 +84,7 @@ def with_threading(seconds, n_threads):
 @timer
 def with_thread_pool(seconds, n_threads):
     # Initialize ThreadPoolExecutor()
-    # Kickoff thread using submit() (assign to variable to reference later)
+    # Kickoff thread using submit() (save reference to get result later)
     # Get result using result() (main() execution suspended for threads in context manager)
     results = []
     with concurrent.futures.ThreadPoolExecutor() as executor:
