@@ -1,2 +1,2 @@
-# python_tests
-exploring basic functionality & packages
+# py_notes
+exploring basic functionality of features & packages
