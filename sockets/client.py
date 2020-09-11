@@ -28,7 +28,6 @@ def cli():
 
 
 def read_msg(sock, buffer_size):
-    print(f"buffer: {buffer_size}")
     header = sock.recv(HEADER_SIZE)
     msg_len = int(header.decode("utf-8"))
 
@@ -52,7 +51,7 @@ def main():
         except:
             break
         else:
-            print(msg)
+            print(f"{address_port[0]}:{address_port[1]} > {msg}")
 
 
 if __name__ == "__main__":
