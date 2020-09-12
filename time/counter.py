@@ -10,7 +10,7 @@ def cli():
     return parser.parse_args()
 
 
-def timer(time_func, seconds):
+def count(time_func, seconds):
     start = time_func()
     elapsed, i = time_func() - start, 0
     while elapsed < seconds:
@@ -23,7 +23,7 @@ def main():
     args = cli()
     time_funcs = [time.process_time, time.perf_counter, time.time]
     for func in time_funcs:
-        i, elapsed = timer(func, args.seconds)
+        i, elapsed = count(func, args.seconds)
         print(f"{func.__name__:>12}| Counted to {i:,} in {elapsed} seconds.")
 
 
