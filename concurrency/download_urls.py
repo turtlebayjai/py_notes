@@ -4,6 +4,7 @@ import argparse
 import concurrent.futures
 import logging
 import os
+import re
 import requests
 import threading
 import time
@@ -77,7 +78,7 @@ def main():
         url_list += urls
     if urls_file:
         with open(urls_file, "r") as f:
-            url_list += [url for url in f.read().split("\n") if url]
+            url_list += [url for url in re.split("[,;\n ]+", f.read()) if url]
 
     no_threading(url_list, args.dir)
     with_threading(url_list, args.dir)
