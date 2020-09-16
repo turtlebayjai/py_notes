@@ -11,12 +11,25 @@ import time
 
 
 def cli():
+    # User may pass URLs through command line and/or a file
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", "--url", help="URLs to download", nargs="+")
     parser.add_argument("-f", "--file", help="File containing URLs")
     parser.add_argument("-d", "--dir", help="Directory to save to", default="")
+
+    # User may designate threading method (default: no threading)
+    thread_method = parser.add_mutually_exclusive_group(required=False)
+    thread_method.add_argument(
+        "--threading", help="Use threading module", action="store_true"
+    )
+    thread_method.add_argument(
+        "--pool",
+        help="Use ThreadPool from concurrent.futures module",
+        action="store_true",
+    )
+
     parser.add_argument(
-        "--quiet", help="only show warnings and errors", action="store_true"
+        "--quiet", help="Only show warnings and errors", action="store_true"
     )
     args = parser.parse_args()
 
@@ -80,9 +93,13 @@ def main():
         with open(urls_file, "r") as f:
             url_list += [url for url in re.split("[,;\n ]+", f.read()) if url]
 
-    no_threading(url_list, args.dir)
-    with_threading(url_list, args.dir)
-    with_thread_pool(url_list, args.dir)
+    if args.threading or args.pool:
+        if args.threading:
+            with_threading(url_list, args.dir)
+        else:
+            with_thread_pool(url_list, args.dir)
+    else:
+        no_threading(url_list, args.dir)
 
 
 if __name__ == "__main__":
