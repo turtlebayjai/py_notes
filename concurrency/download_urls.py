@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+"""Downloads content from user-specified URLs (threading optional)."""
+
 import argparse
 import concurrent.futures
 import logging
